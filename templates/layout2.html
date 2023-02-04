@@ -14,8 +14,7 @@
     </style>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-responsive.min.css">
 </head>
-<body>
-    
+<body style="background-color: rgb(255, 255, 255);">
     <div class="navbar navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container text-center">
@@ -25,10 +24,17 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        {%block content%}
-              
-        {%endblock%}
+    <div class="container" style="position: sticky;">
+        <div class="row">
+            <div class="col">
+                {%block content%}
+                  
+                {%endblock%}
+            </div>
+            <div class="col">
+                <img src="../static/img/cinepolis.png" style="background-position: center; background-repeat: no-repeat;">
+            </div>
+        </div>   
     </div>
 </body>
 </html>
