@@ -9,29 +9,29 @@ def cinepolis():
 
 def descuentoTarjeta(tarjeta, costo):
     if tarjeta == "1":
-        descuentoT = costo * 0.1
-        costo = costo - descuentoT
-        return costo
+        descuentoT = costo * 0.10
+        return descuentoT
     else:
-        return costo
+        return 0
 
 def descuentoBoletos(cantidadBol, costo, tarjeta):
     if cantidadBol > 7:
-        costo = "La cantidad de boletos sobrepasa el limite por persona"
-        return costo
+        total = "La cantidad de boletos sobrepasa el limite por persona"
+        return total
     elif cantidadBol > 5 & cantidadBol <= 7:
-        costo = descuentoTarjeta(tarjeta, costo)
         descuento = costo * 0.15
-        costo = costo - descuento
-        return costo
+        descuentoT = descuentoTarjeta(tarjeta, costo)
+        total = (costo - descuento) - descuentoT
+        return round(total,2)
     elif cantidadBol >= 3 & cantidadBol <= 5:
-        costo = descuentoTarjeta(tarjeta, costo)
-        descuento = costo * 0.15
-        costo = costo - descuento
-        return costo
+        descuentoT = descuentoTarjeta(tarjeta, costo)
+        descuento = costo * 0.10
+        total = (costo - descuento) - descuentoT
+        return round(total,2)
     else:
-        costo = descuentoTarjeta(tarjeta, costo)
-        return costo
+        descuentoT = descuentoTarjeta(tarjeta, costo)
+        total = costo - descuentoT
+        return round(total,2)
 
 @app.route("/resultado", methods=["POST"])
 def resultado():
@@ -40,9 +40,11 @@ def resultado():
     cantidadBol = int(request.form.get("txtCantidadBol"))
     tarjeta = request.form.get("btnTarjeta")
     costoBol = int(12)
-    costo = cantidadCom * costoBol
+    costo = (cantidadBol * cantidadCom) * costoBol
+    print(costo)
     total = descuentoBoletos(cantidadBol, costo, tarjeta)
-    res = "<h1>¡Hola {}! la cantidad a pagar es = {}</h1>".format(nombre, total)
+    print(descuentoBoletos(cantidadBol, costo, tarjeta))
+    res = "¡Hola {}! la cantidad a pagar es = {}".format(nombre, total)
     return render_template("resultadoCine.html",res=res)
 
 if __name__ == "__main__":
